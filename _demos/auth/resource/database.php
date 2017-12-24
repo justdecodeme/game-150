@@ -12,7 +12,7 @@ try {
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	// display success message
-	echo 'Connected to the register database';
+	// echo 'Connected to the register database';
 } catch (Exception $e) {
 	// display error message
 	echo 'Connction failed: ' . $e->getMessage();
