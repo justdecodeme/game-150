@@ -23,13 +23,16 @@ if(isset($_POST["signup"])) {
     // email validation / merge the return data into form_error array
     $form_errors = array_merge($form_errors, check_email($_POST));
 
-	// check if error array is empty, if yes process form data and insert record
-	if(empty($form_errors)) {
-		// collect form data and store in varibles
-		$email = $_POST['email'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+	// collect form data and store in varibles
+	$email = $_POST['email'];
+	$username = $_POST['username'];
+	$password = $_POST['password'];
 
+    if(checkDuplicateEntries("users", "email", $email, $db)) {
+    	$result = flashMessage("<b>$email</b> (email) is already taken, please try another one");
+    } else if(checkDuplicateEntries("users", "username", $username, $db)) {
+    	$result = flashMessage("<b>$username</b> (username) is already taken, please try another one");
+    } else if(empty($form_errors)) { // check if error array is empty, if yes process form data and insert record
 		// hashing the password
 		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -45,18 +48,16 @@ if(isset($_POST["signup"])) {
 
 			// check if one new row is created
 			if($statement->rowCount() == 1) {
-				$result = "<p style='padding: 10px; color: green; border: 1px solid green;'>Registration Successful</p>";
+				$result = flashMessage("Registration Successful", "Pass");
 			}
 		} catch (Exception $e) {
-			$result = "<p style='padding: 10px; color: red;'>An error occurred: " . $e->getMessage() . "</p>";
+			$result = flashMessage("An error occurred: " . $e->getMessage());
 		}
 
 	} else {
-		$result = "<p style='color: red;'>There is " . count($form_errors) . " error(s) in the form<br></p>";
+		$result = flashMessage("There is " . count($form_errors) . " error(s) in the form");
 	}
-
 }
-
  ?>
 
 <!DOCTYPE html>
@@ -90,7 +91,7 @@ if(isset($_POST["signup"])) {
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" name='signup' value="signup"></td>
+				<td><input type="submit" name='signup' value="Signup"></td>
 			</tr>
 		</table>
 	</form>	
