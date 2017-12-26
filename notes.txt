@@ -1,9 +1,3 @@
-<<<<<<< HEAD
 DB Name: game-150
 username: root
 password: 
-=======
-DB Name: game-150
-username: root
-password: 
->>>>>>> 927d0eab9c8ff50cf23bc2ae44b730c7ff60c789

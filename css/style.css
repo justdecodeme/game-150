@@ -1,0 +1,106 @@
+/****************/
+/*	UNIVERSAL	*/
+/****************/
+* {
+	box-sizing: border-box;
+	color: white;
+	font-family: 'Comfortaa', cursive;
+}
+a {
+	font-family: 'Comfortaa', cursive;
+	text-decoration: none;
+}
+.transition {
+	transition: all 0.2s ease;
+}
+
+/************/
+/*	BODY	*/
+/************/
+body {
+    background: orange;
+    background-image: url(../img/bg2.jpg);
+    background-size: cover;
+    background-position: center top;
+}
+body:after {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    left: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: -1;
+}
+
+/************/
+/*	HEADER	*/
+/************/
+header {
+    height: 50px;
+    background: rgba(46, 204, 113,1.0);
+    display: flex;
+    justify-content: space-between;
+}
+header a {
+    background: rgba(0, 0, 0, .2);
+    display: inline-block;
+    height: 100%;
+    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+}
+header a:hover {
+    background: rgba(0, 0, 0, .4);
+}
+
+/************/
+/*	LOGIN	*/
+/************/
+main {
+    text-align: center;
+    margin: 100px 0;
+}
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+form h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+form label {
+    display: block;
+    margin: 20px 0 10px 0;
+}
+form input[type='text'], form input[type='password'] {
+    border: 1px solid white;
+    background: rgba(255, 255, 255, 0.8);
+    color: black;
+    padding: 10px 5px;
+    font-size: 18px;
+    border-radius: 4px;
+    width: 50%;
+}
+form input[type='submit'] {
+    display: block;
+    margin-top: 20px;
+    background: rgba(39, 174, 96,1.0);
+    border: 1px solid white;
+    padding: 12px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+form input[type='submit']:hover {
+    background: rgba(39, 174, 96,1.0);
+}
+form p {
+    margin-top: 20px;
+    font-size: 15px;
+}
+form p a {
+    color: rgba(39, 174, 96,1.0);
+}

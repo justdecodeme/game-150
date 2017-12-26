@@ -7,14 +7,31 @@
 
 	<title>Game 150</title>
 
+	<link href="https://fonts.googleapis.com/css?family=Comfortaa:300,400,700" rel="stylesheet">	
 	<link rel="stylesheet" href="css/font-awesome.css">
+	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<header>
-		<a href="#">Rules</a>
-		<a href="#">Signup</a>
+		<a class="transition" href="#">Rules</a>
+		<a class="transition" href="#">Signup</a>
 	</header>
+
+	<main>
+		<form action="">
+			<h1>Log in to Game 150</h1>
+
+			<label for="username">Email (or username)</label>
+			<input type="text" id="username">
+			
+			<label for="password">Password</label>
+			<input type="password" id="password">
+
+			<input class="transition" type="submit" name="login" value="Login">
+			<p>Not yet a member? <a href="signup.php">Signup</a></p>
+		</form>
+	</main>
 
 	<script type="text/javascript" src="js/script.js"></script>
 </body>
