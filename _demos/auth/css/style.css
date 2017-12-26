@@ -1,0 +1,12 @@
+header ul {
+	padding: 0;
+}
+header li {
+    list-style: none;
+    display: inline;
+    font-size: 20px;
+    margin: 0 10px;
+}
+header li a {
+	text-decoration: none;
+}
