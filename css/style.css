@@ -10,6 +10,9 @@ a {
 	font-family: 'Comfortaa', cursive;
 	text-decoration: none;
 }
+a.link {
+    color: rgba(39, 174, 96,1.0);
+}
 .transition {
 	transition: all 0.2s ease;
 }
@@ -76,6 +79,9 @@ form label {
     display: block;
     margin: 20px 0 10px 0;
 }
+form label a {
+    font-size: 12px;
+}
 form input[type='text'], form input[type='password'] {
     border: 1px solid white;
     background: rgba(255, 255, 255, 0.8);
@@ -100,7 +106,4 @@ form input[type='submit']:hover {
 form p {
     margin-top: 20px;
     font-size: 15px;
-}
-form p a {
-    color: rgba(39, 174, 96,1.0);
 }
