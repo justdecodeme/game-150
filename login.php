@@ -17,8 +17,8 @@
 		<label for="password">Password <a class="link" href="reset.php">(reset password)</a></label>
 		<input type="password" id="password" name="password"> <br>
 		
-		<input type="checkbox" id="remember" name="remember" value="yes">
-		<label for="remember">Remember Me</label>
+		<!-- <input type="checkbox" id="remember" name="remember" value="yes"> -->
+		<!-- <label for="remember">Remember Me</label> -->
 
 		<input class="transition" type="submit" name="login" value="Login">
 		<p>Don’t have an account? <a class="link" href="signup.php">Signup</a></p>
