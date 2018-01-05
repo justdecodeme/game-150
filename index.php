@@ -4,9 +4,9 @@
  ?>
 
 <?php if(!isset($_SESSION['username'])): ?>
-<P>You are currently not Signed In <a class="link" href="login.php">Login</a> <br><br>Not yet a member? <a class="link" href="signup.php">Signup</a></P>
+	<img class="main-img" src="img/bg2.jpg" alt="Game 150">
 <?php else: ?>
-<h3>You are logged in as <?php if(isset($_SESSION['username'])) echo $_SESSION['username']; ?><br><br> <a class="link" href="logout.php">Logout</a></h3>
+	<a class="link" href="#">New Game</a>
 <?php endif ?>
 
 <?php 

@@ -48,7 +48,7 @@ if(isset($_POST["signup"])) {
 
 			// check if one new row is created
 			if($statement->rowCount() == 1) {
-				$result = flashMessage("Registration Successful", "Pass");
+				$result = flashMessage("Registration Successful <a href='login.php'>Login</a>", "Pass");
 			}
 		} catch (Exception $e) {
 			$result = flashMessage("An error occurred: " . $e->getMessage());

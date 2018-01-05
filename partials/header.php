@@ -16,14 +16,26 @@
 	<link rel="stylesheet" href="css/font-awesome.css">
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script defer src="js/fontawesome-all.min.js"></script>
 </head>
 <body>
 	<header>
 		<div class="left">
+			<a class="transition" href="index.php">Home</a>
 			<a class="transition inactive" href="#">Rules</a>
 		</div>
 		<div class="right">
-			<a href="login.php">Login</a>
-			<a href="signup.php">Signup</a>
+			<!-- if not logged in and at home page -->
+			<?php if(!isset($_SESSION['username']) && $page_title == "Home Page"): ?>
+				<a href="signup.php">Signup</a>
+				<a href="login.php">Login</a>
+			<!-- if logged in -->
+			<?php elseif(isset($_SESSION['username'])): ?>
+				<a id="userName"><?php echo $_SESSION['username'] ?><span class="fa-icons"><i class="fas fa-caret-down"></i></span></a>
+				<ul id="userProfile">
+					<li><a class="inactive" href="">Edit Profile</a></li>
+					<li><a href="logout.php">Logout</a></li>
+				</ul>
+			<?php endif ?>
 		</div>
 	</header>

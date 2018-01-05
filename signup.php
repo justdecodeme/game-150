@@ -18,7 +18,7 @@
 		<input type="text" id="username" name="username">
 		
 		<label for="password">Password</label>
-		<input type="text" id="password" name="password">
+		<input type="password" id="password" name="password">
 		
 		<input class="transition" type="submit" name="signup" value="Signup">
 		<p>Already have an account? <a class="link" href="login.php">Log in</a></p>
