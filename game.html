@@ -18,47 +18,47 @@
 				<th>Ashish</th>
 				<th>Amod</th>
 				<th>Rakesh</th>
-				<th>Mayank</th>
-				<th></th>
+				<th>Eric San</th>
+				<td><button name="new-game" disabled>New Game</button></td>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
+			<tr id="rowHands" class="current">
 				<th>1</th>
 				<td>
-					<input type="number" name="ih" placeholder="IH" min="0" max="13" value="0">
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="0">
 					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="1">
-					<input type="number" name="score" placeholder="" disabled value="">
+					<input type="number" name="score" disabled>
 				</td>
 				<td>
-					<input type="number" name="ih" placeholder="IH" min="0" max="13" value="3">
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="3">
 					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="2">
-					<input type="number" name="score" placeholder="" disabled value="">
+					<input type="number" name="score" disabled>
 				</td>
 				<td>
-					<input type="number" name="ih" placeholder="IH" min="0" max="13" value="4">
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="4">
 					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="1">
-					<input type="number" name="score" placeholder="" disabled value="">
+					<input type="number" name="score" disabled>
 				</td>
 				<td>
-					<input type="number" name="ih" placeholder="IH" min="0" max="13" value="2">
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="2">
 					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="3">
-					<input type="number" name="score" placeholder="" disabled value="">
+					<input type="number" name="score" disabled>
 				</td>
 				<td>
-					<button name="submit-ih">Submit IH</button>
-					<button name="submit-fh" disabled>Submit FH</button>
-					<button name="score" disabled>Score</button>
+					<button disabled name="submit-ih">Submit IH</button>
+					<button disabled name="submit-fh">Submit FH</button>
+					<button disabled name="score">Score</button>
 				</td>
 			</tr>
 		</tbody>
 		<tfoot>
-			<tr>
-				<th></th>
-				<th>3rd</th>
-				<th>2nd</th>
-				<th>1st</th>
-				<th>4th</th>
+			<tr id="rowTotalScore">
+				<th>Total</th>
+				<th>-</th>
+				<th>-</th>
+				<th>-</th>
+				<th>-</th>
 				<th></th>
 			</tr>
 		</tfoot>
@@ -66,19 +66,21 @@
 	<script>
 		let isInitialHandsSubmitted = false,
 			isFinalHandsSubmitted = false,
-			isScoreSubmitted,
+			isScoreSubmitted = false,
 			isInitialHandsFilled,
 			isFinalHandsFilled,
 			isScoreFilled,
 			totalInitialHands,
 			totalFinalHands;
 
-		let submitInitialHands = document.querySelector('button[name="submit-ih"]');
+		let submitNewGame = document.querySelector('button[name="new-game"]');
+		let submitInitialHands = document.querySelector('.current button[name="submit-ih"]');
 		let submitFinalHands = document.querySelector('button[name="submit-fh"]');
 		let submitScore = document.querySelector('button[name="score"]');
-		let inputInitialHands = document.querySelectorAll('input[name="ih"]');
+		let inputInitialHands = document.querySelectorAll('.current input[name="ih"]');
 		let inputFinalHands = document.querySelectorAll('input[name="fh"]');
 		let inputScore = document.querySelectorAll('input[name="score"]');
+		let rowTotalScore = document.querySelectorAll('#rowTotalScore th');
 		let totalPlayers = 4;
 
 		function resetSubmitInitialHands() {
@@ -97,7 +99,6 @@
 					isInitialHandsFilled = false;
 				}
 				totalInitialHands += parseInt(inputInitialHands[i].value);
-				console.log(inputInitialHands[i].value)
 			}
 
 			if(!isInitialHandsFilled) {
@@ -109,7 +110,9 @@
 			} else if(submitInitialHands.innerHTML == 'Edit IH') {
 				submitInitialHands.innerHTML = 'Submit IH';
 				submitInitialHands.style.backgroundColor = '';
+
 				submitFinalHands.setAttribute('disabled', true);
+				submitScore.setAttribute('disabled', 'true');
 				
 				for(let i = 0; i < totalPlayers; i++) {
 					inputInitialHands[i].removeAttribute('disabled');
@@ -132,11 +135,11 @@
 					}
 				}				
 			}
-			console.log(isInitialHandsFilled, isInitialHandsSubmitted, totalInitialHands);
 		}
 		submitInitialHands.addEventListener('click', calculateInitialHands, false); 
 		for(let i = 0; i < totalPlayers; i++) {
 			inputInitialHands[i].addEventListener('change', resetSubmitInitialHands, false);
+			inputInitialHands[i].removeAttribute('disabled');
 		}
 		
 		function resetSubmitFinalHands() {
@@ -155,7 +158,6 @@
 					isFinalHandsFilled = false;
 				}
 				totalFinalHands += parseInt(inputFinalHands[i].value);
-				console.log(inputFinalHands[i].value)
 			}
 
 			if(!isFinalHandsFilled) {
@@ -168,6 +170,7 @@
 				submitFinalHands.innerHTML = 'Submit FH';
 				submitFinalHands.style.backgroundColor = '';
 				
+				submitInitialHands.setAttribute('disabled', 'true');
 				submitScore.setAttribute('disabled', 'true');
 
 				for(let i = 0; i < totalPlayers; i++) {
@@ -180,6 +183,7 @@
 				submitFinalHands.innerHTML = 'Edit FH';
 				submitFinalHands.style.backgroundColor = 'lightgreen';
 				
+				submitInitialHands.removeAttribute('disabled');			
 				submitScore.removeAttribute('disabled');
 
 				for(let i = 0; i < totalPlayers; i++) {
@@ -208,9 +212,17 @@
 					es = d * 10;
 				}
 				ts = is + es;
+				rowTotalScore[i+1].innerHTML = inputScore[i].value = ts;
+				isScoreSubmitted = true;
+
+				submitInitialHands.setAttribute('disabled', 'true');
+				submitFinalHands.setAttribute('disabled', 'true');
+				submitScore.setAttribute('disabled', 'true');
+				submitScore.setAttribute('disabled', 'true');
+				submitNewGame.removeAttribute('disabled', 'true');
 			}
 		}
-		submitFinalHands.addEventListener('click', calculateScore, false); 
+		submitScore.addEventListener('click', calculateScore, false); 
 	</script>
 </body>
 </html>
