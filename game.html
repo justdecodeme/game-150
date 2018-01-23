@@ -11,7 +11,7 @@
 	</style>
 </head>
 <body>
-	<table border="1">
+	<table border="1" class="currentParent">
 		<thead>
 			<tr>
 				<th>18-01-03</th>
@@ -19,11 +19,11 @@
 				<th>Amod</th>
 				<th>Rakesh</th>
 				<th>Eric San</th>
-				<td><button name="new-game" disabled>New Game</button></td>
+				<td><button disabled name="new-game">New Game</button></td>
 			</tr>
 		</thead>
 		<tbody>
-			<tr id="rowHands" class="current">
+			<tr class="rowHands current">
 				<th>1</th>
 				<td>
 					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="0">
@@ -73,15 +73,20 @@
 			totalInitialHands,
 			totalFinalHands;
 
-		let submitNewGame = document.querySelector('button[name="new-game"]');
 		let submitInitialHands = document.querySelector('.current button[name="submit-ih"]');
 		let submitFinalHands = document.querySelector('button[name="submit-fh"]');
 		let submitScore = document.querySelector('button[name="score"]');
 		let inputInitialHands = document.querySelectorAll('.current input[name="ih"]');
 		let inputFinalHands = document.querySelectorAll('input[name="fh"]');
 		let inputScore = document.querySelectorAll('input[name="score"]');
+
+		let submitNewGame = document.querySelector('button[name="new-game"]');
 		let rowTotalScore = document.querySelectorAll('#rowTotalScore th');
+		let rowHandsCurrent = document.querySelector('tr.current');
+		let rowHandsParent = document.querySelector('.currentParent tbody');
 		let totalPlayers = 4;
+
+		submitInitialHands.removeAttribute('disabled');
 
 		function resetSubmitInitialHands() {
 			isInitialHandsSubmitted = false;
@@ -133,15 +138,11 @@
 					for(let i = 0; i < totalPlayers; i++) {
 						inputFinalHands[i].removeAttribute('disabled');
 					}
-				}				
+				} else {
+					submitScore.removeAttribute('disabled');
+				}	
 			}
 		}
-		submitInitialHands.addEventListener('click', calculateInitialHands, false); 
-		for(let i = 0; i < totalPlayers; i++) {
-			inputInitialHands[i].addEventListener('change', resetSubmitInitialHands, false);
-			inputInitialHands[i].removeAttribute('disabled');
-		}
-		
 		function resetSubmitFinalHands() {
 			isFinalHandsSubmitted = false;
 			isFinalHandsFilled = true;
@@ -191,11 +192,6 @@
 				}				
 			}
 		}
-		submitFinalHands.addEventListener('click', calculateFinalHands, false); 
-		for(let i = 0; i < totalPlayers; i++) {
-			inputFinalHands[i].addEventListener('change', resetSubmitFinalHands, false);
-		}
-
 		function calculateScore() {
 			for(let i = 0; i < totalPlayers; i++) {
 				
@@ -222,7 +218,54 @@
 				submitNewGame.removeAttribute('disabled', 'true');
 			}
 		}
+		function createNewRow() {
+			let rowHandsNewTag = document.createElement('tr');
+			let rowHandsNewText = `
+				<th>1</th>
+				<td>
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="0">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="1">
+					<input type="number" name="score" disabled>
+				</td>
+				<td>
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="3">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="2">
+					<input type="number" name="score" disabled>
+				</td>
+				<td>
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="4">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="1">
+					<input type="number" name="score" disabled>
+				</td>
+				<td>
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="2">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="3">
+					<input type="number" name="score" disabled>
+				</td>
+				<td>
+					<button name="submit-ih">Submit IH</button>
+					<button disabled name="submit-fh">Submit FH</button>
+					<button disabled name="score">Score</button>
+				</td>
+			`;
+			rowHandsCurrent.classList.remove('current');
+			rowHandsNewTag.classList.add('rowHands');
+			rowHandsNewTag.classList.add('current');
+			rowHandsParent.appendChild(rowHandsNewTag);
+			rowHandsNewTag.innerHTML = rowHandsNewText;
+		}
+
+		for(let i = 0; i < totalPlayers; i++) {
+			inputFinalHands[i].addEventListener('focus', resetSubmitFinalHands, false);
+		}
+		for(let i = 0; i < totalPlayers; i++) {
+			inputInitialHands[i].addEventListener('focus', resetSubmitInitialHands, false);
+			inputInitialHands[i].removeAttribute('disabled');
+		}
+		submitInitialHands.addEventListener('click', calculateInitialHands, false); 
+		submitFinalHands.addEventListener('click', calculateFinalHands, false); 
 		submitScore.addEventListener('click', calculateScore, false); 
+		submitNewGame.addEventListener('click', createNewRow, false); 
 	</script>
 </body>
 </html>
