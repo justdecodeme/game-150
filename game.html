@@ -27,10 +27,10 @@
 		<tfoot>
 			<tr id="rowTotalScore">
 				<th>Total</th>
-				<th>-</th>
-				<th>-</th>
-				<th>-</th>
-				<th>-</th>
+				<th>0</th>
+				<th>0</th>
+				<th>0</th>
+				<th>0</th>
 				<th></th>
 			</tr>
 		</tfoot>
@@ -93,27 +93,7 @@
 			const inputFinalHands = currentRount.querySelectorAll('input[name="fh"]');
 			const inputScore = currentRount.querySelectorAll('input[name="score"]');			
 
-			// console.log(submitInitialHands);
-			// console.log(submitFinalHands);
-			// console.log(submitScore);
-			// console.log(inputInitialHands);
-			// console.log(inputFinalHands);
-			// console.log(inputScore);
-	
 			submitInitialHands.removeAttribute('disabled');
-
-			for(let i = 0; i < totalPlayers; i++) {
-				inputInitialHands[i].addEventListener('focus', resetSubmitInitialHands, false);
-				inputInitialHands[i].removeAttribute('disabled');
-			}
-	
-			for(let i = 0; i < totalPlayers; i++) {
-				inputFinalHands[i].addEventListener('focus', resetSubmitFinalHands, false);
-			}
-
-			submitInitialHands.addEventListener('click', calculateInitialHands, false); 
-			submitFinalHands.addEventListener('click', calculateFinalHands, false); 
-			submitScore.addEventListener('click', calculateScore, false); 
 
 			function resetSubmitInitialHands() {
 				isInitialHandsSubmitted = false;
@@ -234,8 +214,8 @@
 						is = fh * 10;
 						es = d * 10;
 					}
-					ts = is + es;
-					rowTotalScore[i+1].innerHTML = inputScore[i].value = ts;
+					inputScore[i].value = ts = is + es;
+					rowTotalScore[i+1].innerHTML = parseInt(rowTotalScore[i+1].innerHTML) + ts;
 					isScoreSubmitted = true;
 
 					submitInitialHands.setAttribute('disabled', 'true');
@@ -245,6 +225,18 @@
 					submitNewGame.removeAttribute('disabled', 'true');
 				}
 			}
+			for(let i = 0; i < totalPlayers; i++) {
+				inputInitialHands[i].addEventListener('focus', resetSubmitInitialHands, false);
+				inputInitialHands[i].removeAttribute('disabled');
+			}
+	
+			for(let i = 0; i < totalPlayers; i++) {
+				inputFinalHands[i].addEventListener('focus', resetSubmitFinalHands, false);
+			}
+
+			submitInitialHands.addEventListener('click', calculateInitialHands, false); 
+			submitFinalHands.addEventListener('click', calculateFinalHands, false); 
+			submitScore.addEventListener('click', calculateScore, false); 		
 		}	
 		generateRow();
 
