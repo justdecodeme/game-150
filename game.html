@@ -8,6 +8,12 @@
 			width: 40px;
 			text-align: center;
 		}
+		td.highest {
+			background: green;
+		}
+		td.lowest {
+			background: red;
+		}		
 	</style>
 </head>
 <body>
@@ -57,22 +63,22 @@
 				<th>${roundsPlayed+1}</th>
 				<td>
 					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="0">
-					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="1">
-					<input type="number" name="score" disabled>
-				</td>
-				<td>
-					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="3">
 					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="2">
 					<input type="number" name="score" disabled>
 				</td>
 				<td>
-					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="4">
-					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="1">
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="3">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="0">
 					<input type="number" name="score" disabled>
 				</td>
 				<td>
 					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="2">
-					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="3">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="0">
+					<input type="number" name="score" disabled>
+				</td>
+				<td>
+					<input type="number" name="ih" placeholder="IH" min="0" max="13" disabled value="2">
+					<input type="number" name="fh" placeholder="FH" min="0" max="13" disabled value="0">
 					<input type="number" name="score" disabled>
 				</td>
 				<td>
@@ -200,6 +206,9 @@
 				}
 			}
 			function calculateScore() {
+				let highestScoreInput, lowestScoreInput;
+				let highestScore, lowestScore = 0;
+
 				for(let i = 0; i < totalPlayers; i++) {
 					
 					let ih, fh, is = es = ts = 0; // initial hands, final hands, initial score, extra score, total score
@@ -216,6 +225,20 @@
 					}
 					inputScore[i].value = ts = is + es;
 					rowTotalScore[i+1].innerHTML = parseInt(rowTotalScore[i+1].innerHTML) + ts;
+
+					if (i == 0) {
+						highestScore = lowestScore = ts;
+						highestScorePlayer = lowestScorePlayer = inputScore[0].parentNode;
+					} else {
+						if(inputScore[i].value > highestScore) {
+							highestScore = parseInt(inputScore[i].value);
+							highestScorePlayer = inputScore[i].parentNode;
+						}
+						if(inputScore[i].value < lowestScore) {
+							lowestScore = parseInt(inputScore[i].value);
+							lowestScorePlayer = inputScore[i].parentNode;
+						}
+					}
 					isScoreSubmitted = true;
 
 					submitInitialHands.setAttribute('disabled', 'true');
@@ -224,6 +247,10 @@
 					submitScore.setAttribute('disabled', 'true');
 					submitNewGame.removeAttribute('disabled', 'true');
 				}
+				highestScorePlayer.classList.add('highest');
+				lowestScorePlayer.classList.add('lowest');				
+						console.log("hightest: ", highestScorePlayer)
+						console.log("lowest: ", lowestScorePlayer)
 			}
 			for(let i = 0; i < totalPlayers; i++) {
 				inputInitialHands[i].addEventListener('focus', resetSubmitInitialHands, false);
