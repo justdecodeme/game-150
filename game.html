@@ -13,7 +13,7 @@
 		}
 		td.lowest {
 			background: red;
-		}		
+		}
 	</style>
 </head>
 <body>
@@ -44,7 +44,7 @@
 	<script>
 		let submitNewGame = document.querySelector('button[name="new-game"]');
 		let rowTotalScore = document.querySelectorAll('#rowTotalScore th');
-		let rowHandsParent = document.querySelector('tbody');		
+		let rowHandsParent = document.querySelector('tbody');
 		let totalPlayers = 4;
 
 		function generateRow() {
@@ -55,7 +55,7 @@
 				isFinalHandsFilled,
 				isScoreFilled,
 				totalInitialHands,
-				totalFinalHands;			
+				totalFinalHands;
 
 			const roundsPlayed = rowHandsParent.querySelectorAll('[data-round]').length;
 			const newRoundTag = document.createElement('tr');
@@ -97,7 +97,7 @@
 			const submitScore = currentRount.querySelector('button[name="score"]');
 			const inputInitialHands = currentRount.querySelectorAll('input[name="ih"]');
 			const inputFinalHands = currentRount.querySelectorAll('input[name="fh"]');
-			const inputScore = currentRount.querySelectorAll('input[name="score"]');			
+			const inputScore = currentRount.querySelectorAll('input[name="score"]');
 
 			submitInitialHands.removeAttribute('disabled');
 
@@ -113,37 +113,36 @@
 				submitInitialHands.style.backgroundColor = 'grey';
 
 				for(let i = 0; i < totalPlayers; i++) {
-					if(inputInitialHands[i].value == "") {
+          // if initial hand entry is not from 0 to 13
+					if(!(parseInt(inputInitialHands[i].value) >= 0 && parseInt(inputInitialHands[i].value) <= 13)) {
 						isInitialHandsFilled = false;
 					}
-					totalInitialHands += parseInt(inputInitialHands[i].value);
 				}
-
+        // if initial hand not filled correctly
 				if(!isInitialHandsFilled) {
 					submitInitialHands.style.backgroundColor = 'red';
-					console.error("Don't leave any Entry blank");
-				} else if(totalInitialHands > 13) {
-					submitInitialHands.style.backgroundColor = 'red';
-					console.error('Total Inital Hands cannot be more than 13!');
+					console.error("Each Entry should have value from 0 and 13");
+          // If initial hands are in edit mode
 				} else if(submitInitialHands.innerHTML == 'Edit IH') {
 					submitInitialHands.innerHTML = 'Submit IH';
 					submitInitialHands.style.backgroundColor = '';
 
 					submitFinalHands.setAttribute('disabled', true);
 					submitScore.setAttribute('disabled', 'true');
-					
+
 					for(let i = 0; i < totalPlayers; i++) {
 						inputInitialHands[i].removeAttribute('disabled');
 						inputFinalHands[i].setAttribute('disabled', 'true');
-					}				
+					}
+          // if initial hand filled correctly
 				} else {
 					isInitialHandsSubmitted = true;
 					isInitialHandsFilled = true;
-		
+
 					submitInitialHands.innerHTML = 'Edit IH';
 					submitInitialHands.style.backgroundColor = 'lightgreen';
 					submitFinalHands.removeAttribute('disabled');
-		
+
 					for(let i = 0; i < totalPlayers; i++) {
 						inputInitialHands[i].setAttribute('disabled', 'true');
 					}
@@ -153,7 +152,7 @@
 						}
 					} else {
 						submitScore.removeAttribute('disabled');
-					}	
+					}
 				}
 			}
 			function resetSubmitFinalHands() {
@@ -168,41 +167,41 @@
 				submitFinalHands.style.backgroundColor = 'grey';
 
 				for(let i = 0; i < totalPlayers; i++) {
-					if(inputFinalHands[i].value == "") {
+          // if final hand entry is not from 0 to 13
+					if(!(parseInt(inputFinalHands[i].value) >= 0 && parseInt(inputFinalHands[i].value) <= 13)) {
 						isFinalHandsFilled = false;
 					}
 					totalFinalHands += parseInt(inputFinalHands[i].value);
 				}
-
 				if(!isFinalHandsFilled) {
 					submitFinalHands.style.backgroundColor = 'red';
-					console.error("Don't leave any Entry blank");
-				} else if(totalFinalHands > 13) {
+					console.error("Each Entry should have value from 0 and 13");
+				} else if(!(totalFinalHands == 13)) {
 					submitFinalHands.style.backgroundColor = 'red';
-					console.error('Total Inital Hands cannot be more than 13!');
+					console.error('Total Final Hands must be equal to 13!');
 				} else if(submitFinalHands.innerHTML == 'Edit FH') {
 					submitFinalHands.innerHTML = 'Submit FH';
 					submitFinalHands.style.backgroundColor = '';
-					
+
 					submitInitialHands.setAttribute('disabled', 'true');
 					submitScore.setAttribute('disabled', 'true');
 
 					for(let i = 0; i < totalPlayers; i++) {
 						inputFinalHands[i].removeAttribute('disabled');
-					}				
+					}
 				} else {
 					isFinalHandsSubmitted = true;
 					isFinalHandsFilled = true;
-		
+
 					submitFinalHands.innerHTML = 'Edit FH';
 					submitFinalHands.style.backgroundColor = 'lightgreen';
-					
-					submitInitialHands.removeAttribute('disabled');			
+
+					submitInitialHands.removeAttribute('disabled');
 					submitScore.removeAttribute('disabled');
 
 					for(let i = 0; i < totalPlayers; i++) {
 						inputFinalHands[i].setAttribute('disabled', 'true');
-					}				
+					}
 				}
 			}
 			function calculateScore() {
@@ -210,9 +209,9 @@
 				let highestScore, lowestScore = 0;
 
 				for(let i = 0; i < totalPlayers; i++) {
-					
+
 					let ih, fh, is = es = ts = 0; // initial hands, final hands, initial score, extra score, total score
-					
+
 					ih = inputInitialHands[i].value;
 					fh = inputFinalHands[i].value;
 					d = fh - ih;
@@ -248,7 +247,7 @@
 					submitNewGame.removeAttribute('disabled', 'true');
 				}
 				highestScorePlayer.classList.add('highest');
-				lowestScorePlayer.classList.add('lowest');				
+				lowestScorePlayer.classList.add('lowest');
 						console.log("hightest: ", highestScorePlayer)
 						console.log("lowest: ", lowestScorePlayer)
 			}
@@ -256,18 +255,18 @@
 				inputInitialHands[i].addEventListener('focus', resetSubmitInitialHands, false);
 				inputInitialHands[i].removeAttribute('disabled');
 			}
-	
+
 			for(let i = 0; i < totalPlayers; i++) {
 				inputFinalHands[i].addEventListener('focus', resetSubmitFinalHands, false);
 			}
 
-			submitInitialHands.addEventListener('click', calculateInitialHands, false); 
-			submitFinalHands.addEventListener('click', calculateFinalHands, false); 
-			submitScore.addEventListener('click', calculateScore, false); 		
-		}	
+			submitInitialHands.addEventListener('click', calculateInitialHands, false);
+			submitFinalHands.addEventListener('click', calculateFinalHands, false);
+			submitScore.addEventListener('click', calculateScore, false);
+		}
 		generateRow();
 
-		submitNewGame.addEventListener('click', generateRow, false); 
+		submitNewGame.addEventListener('click', generateRow, false);
 	</script>
 </body>
 </html>
